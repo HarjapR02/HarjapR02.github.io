@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harjap Randhawa — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg2: #111111;
+      --bg3: #181818;
+      --accent: #FF4D00;
+      --accent2: #FF7A40;
+      --white: #F5F0EB;
+      --muted: #888880;
+      --border: rgba(255,255,255,0.07);
+      --card-bg: #111111;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      bottom: -4rem;
+      right: -2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(10rem, 22vw, 22rem);
+      color: rgba(255,77,0,0.04);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 12vw, 11rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    .hero-name .accent-line { color: var(--accent); display: block; }
+
+    .hero-tagline {
+      margin-top: 2.5rem;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+
+    .hero-tagline strong { color: var(--white); font-weight: 500; }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--white);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 4rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 1.2s forwards;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 7rem 4rem; }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0 4rem;
+      width: calc(100% - 8rem);
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-bio {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .about-bio strong { color: var(--white); font-weight: 500; }
+
+    .about-bio p + p { margin-top: 1.25rem; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-category {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+
+    .skill-category:hover { border-color: var(--accent); }
+
+    .skill-cat-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      background: rgba(255,77,0,0.08);
+      color: var(--white);
+      border: 1px solid rgba(255,77,0,0.15);
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg2); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover { border-color: rgba(255,77,0,0.35); transform: translateY(-4px); }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: rgba(255,77,0,0.12);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .project-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+    }
+
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.7rem; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg); }
+
+    .exp-list { max-width: 780px; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2.5rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-item:first-child { padding-top: 0; }
+
+    .exp-meta { padding-top: 0.2rem; }
+
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1.6;
+    }
+
+    .exp-company {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .exp-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .exp-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .exp-points li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .exp-points li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--bg2);
+      text-align: center;
+    }
+
+    .contact-inner { max-width: 640px; margin: 0 auto; }
+
+    .contact-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    .contact-headline span { color: var(--accent); }
+
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    .contact-email {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--accent);
+      transition: opacity 0.2s;
+    }
+
+    .contact-email:hover { opacity: 0.7; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      section { padding: 5rem 2rem; }
+      #hero { padding: 7rem 2rem 4rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+      .hero-scroll-hint { left: 2rem; }
+      .divider { margin: 0 2rem; width: calc(100% - 4rem); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 6rem 1.5rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">HR<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-text">SE</div>
+    <p class="hero-eyebrow">Software Engineer · Brampton, ON</p>
+    <h1 class="hero-name">
+      Harjap
+      <span class="accent-line">Randhawa.</span>
+    </h1>
+    <p class="hero-tagline">
+      <strong>Full-stack engineer</strong> graduating from York University with a passion for 
+      building <strong>scalable systems</strong>, clean code, and solutions that 
+      <strong>actually work</strong>.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Get In Touch ↗</a>
+      <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="btn-outline">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/harjap-randhawa-b8809b204" target="_blank" rel="noopener" class="btn-outline">LinkedIn ↗</a>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label reveal">About Me</p>
+    <h2 class="section-title reveal">The Person<br>Behind the Code.</h2>
+    <div class="about-grid">
+      <div class="about-bio reveal">
+        <p>I'm a <strong>Software Engineering graduate from York University</strong> with hands-on experience across the full stack — from designing relational databases and RESTful APIs to building responsive front-end interfaces with React.</p>
+        <p>I care deeply about writing <strong>clean, maintainable code</strong> and solving real problems efficiently. Whether it's optimizing a SQL query, architecting a system, or shipping a polished UI, I bring curiosity and precision to everything I build.</p>
+        <p>Beyond coding, I've developed strong <strong>communication and teamwork skills</strong> through diverse work environments — from logistics operations to retail — giving me a well-rounded perspective when collaborating across teams.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Personal Projects Built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Languages & Frameworks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Years Work Experience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label reveal">Technical Skills</p>
+    <h2 class="section-title reveal">What I Work With.</h2>
+    <div class="skills-grid">
+      <div class="skill-category reveal">
+        <p class="skill-cat-title">Languages</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">MATLAB</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <p class="skill-cat-title">Frontend</p>
+        <div class="skill-tags">
+          <span class="skill-tag">React JS</span>
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">CSS</span>
+          <span class="skill-tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <p class="skill-cat-title">Backend & Data</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">RESTful APIs</span>
+          <span class="skill-tag">Microsoft SQL</span>
+          <span class="skill-tag">ER Modeling</span>
+          <span class="skill-tag">SQL Queries</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <p class="skill-cat-title">Tools & Practices</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">IntelliJ</span>
+          <span class="skill-tag">Visual Studio</span>
+          <span class="skill-tag">Eclipse</span>
+          <span class="skill-tag">Arduino</span>
+          <span class="skill-tag">SOLIDWORKS</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <p class="skill-cat-title">Software Concepts</p>
+        <div class="skill-tags">
+          <span class="skill-tag">OOP Design</span>
+          <span class="skill-tag">Software Engineering</span>
+          <span class="skill-tag">Scheduling Algorithms</span>
+          <span class="skill-tag">Data-Driven Systems</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <p class="skill-cat-title">Soft Skills</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Multilingual</span>
+          <span class="skill-tag">Teamwork</span>
+          <span class="skill-tag">Leadership</span>
+          <span class="skill-tag">Critical Thinking</span>
+          <span class="skill-tag">Communication</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label reveal">Personal Projects</p>
+    <h2 class="section-title reveal">Things I've Built.</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-number">01</div>
+        <h3 class="project-name">Full-Stack Web Application</h3>
+        <p class="project-desc">Developed a complete full-stack application featuring RESTful APIs, responsive front-end interfaces, and an optimized relational database backend.</p>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">SQL</span>
+          <span class="project-tag">REST API</span>
+        </div>
+        <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">02</div>
+        <h3 class="project-name">York University Online Parking System</h3>
+        <p class="project-desc">A fully-featured parking management app for students and staff — with login, lot/space tracking, real-time time remaining, payment tabs, and a manager interface.</p>
+        <div class="project-tags">
+          <span class="project-tag">Java</span>
+          <span class="project-tag">Eclipse</span>
+          <span class="project-tag">GUI</span>
+          <span class="project-tag">OOP</span>
+        </div>
+        <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">03</div>
+        <h3 class="project-name">TAB2XML — Music Tablature Converter</h3>
+        <p class="project-desc">Java application converting guitar tablature into MusicXML. Features include sheet music preview, real-time edit sync, PDF export, playback from any measure, and XML saving.</p>
+        <div class="project-tags">
+          <span class="project-tag">Java</span>
+          <span class="project-tag">MusicXML</span>
+          <span class="project-tag">PDF</span>
+          <span class="project-tag">GUI</span>
+        </div>
+        <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">04</div>
+        <h3 class="project-name">Relational Database System Design</h3>
+        <p class="project-desc">Designed and implemented normalized database schemas from requirements. Built ER diagrams, relational models, and complex SQL queries with a focus on integrity and performance.</p>
+        <div class="project-tags">
+          <span class="project-tag">SQL</span>
+          <span class="project-tag">ER Modeling</span>
+          <span class="project-tag">Database Design</span>
+        </div>
+        <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">05</div>
+        <h3 class="project-name">Automated Plant Watering System</h3>
+        <p class="project-desc">IoT project using an Arduino board, moisture sensor, and water pump. MATLAB code reads voltage to determine soil dryness and automatically triggers the pump to water the plant.</p>
+        <div class="project-tags">
+          <span class="project-tag">Arduino</span>
+          <span class="project-tag">MATLAB</span>
+          <span class="project-tag">IoT</span>
+          <span class="project-tag">Sensors</span>
+        </div>
+        <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label reveal">Work History</p>
+    <h2 class="section-title reveal">Where I've Been.</h2>
+    <div class="exp-list">
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <p class="exp-date">Dec 2021 –<br>Jan 2023</p>
+          <p class="exp-company">Khatrao Transport LTD.</p>
+        </div>
+        <div>
+          <p class="exp-role">Operations Employee</p>
+          <ul class="exp-points">
+            <li>Managed scheduling systems and optimized delivery routes using digital tools</li>
+            <li>Monitored real-time operational data and updated internal tracking systems</li>
+            <li>Analyzed logistics data to identify inefficiencies and improve performance</li>
+            <li>Maintained structured records and reports using Excel and database systems</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <p class="exp-date">Apr 2021 –<br>Sep 2021</p>
+          <p class="exp-company">Home Depot</p>
+        </div>
+        <div>
+          <p class="exp-role">Hardware Associate</p>
+          <ul class="exp-points">
+            <li>Collaborated with team to formulate strategic sales goals</li>
+            <li>Communicated with customers to analyze and address their needs</li>
+            <li>Organized and displayed merchandise based on product marketability</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <p class="exp-date">Jun 2019 –<br>Apr 2020</p>
+          <p class="exp-company">Canamex Trucking System Inc.</p>
+        </div>
+        <div>
+          <p class="exp-role">Office Assistant</p>
+          <ul class="exp-points">
+            <li>Drafted meeting agendas and executed follow-up for team conferences</li>
+            <li>Managed online dispatch files and answered inbound communications</li>
+            <li>Maintained all office technology and performed basic bookkeeping</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <p class="section-label reveal">Contact</p>
+      <h2 class="contact-headline reveal">Let's Work<br><span>Together.</span></h2>
+      <p class="contact-sub reveal">I'm actively looking for new opportunities. Whether you have a role in mind, a project idea, or just want to connect — I'd love to hear from you.</p>
+      <div class="contact-links reveal">
+        <a href="https://github.com/HarjapR02" target="_blank" rel="noopener" class="btn-outline">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/harjap-randhawa-b8809b204" target="_blank" rel="noopener" class="btn-primary">LinkedIn ↗</a>
+      </div>
+      <a href="mailto:randhawaharjap12@gmail.com" class="contact-email reveal">randhawaharjap12@gmail.com</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Harjap Randhawa</span>
+    <span class="footer-copy">© 2025 — Built with ♥ and clean code</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
